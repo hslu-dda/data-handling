@@ -188,6 +188,13 @@ function sortArray(inputArray, sortOrder, sortByKey) {
 3. In the comparison function, we use `if` statements to compare the `value` keys of the objects according to the specified sort order.
 4. Finally, we return the sorted copy of the array.
 
-### Credits
+
+## Further ressources
+
+- W3 [JavaScript Array Methods](https://www.w3schools.com/js/js_array_methods.asp)
+- W3 [JavaScript Array Search](https://www.w3schools.com/js/js_array_search.asp)
+- W3 [JavaScript Sorting Arrays](https://www.w3schools.com/js/js_array_sort.asp)
+
+## Credits
 
 Code and documentation made with support by ChatGPT4 🐲. Reviewed by human eyes 🥷. 

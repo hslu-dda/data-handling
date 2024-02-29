@@ -9,8 +9,7 @@ function setup() {
 
   d3.csv("./data/selbstwirksamkeit.csv", d3.autoType).then((csv) => {
     console.log(csv);
-    csv;
-    // redraw();
+
     data = percentageToNumbers(csv);
     console.log("Data: ", data);
 
