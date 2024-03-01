@@ -239,6 +239,22 @@ function sortArray(inputArray, sortOrder, sortByKey) {
 3. In the comparison function, we use `if` statements to compare the `value` keys of the objects according to the specified sort order.
 4. Finally, we return the sorted copy of the array.
 
+## Questions & Problems
+
+**When we apply the `.map()` function on an array it also changes the original array. For example in the function `percentageToNumbers` we used above.**
+
+Some array functions automatically create a "deep copy" of an array with no reference to earlier instances, for example `.filter()`. Others, like `.map()` have an effect on the original instance, even if we assign it to a new variable. We can avoid this with the following code: 
+
+```js
+const deepCopiedArray = JSON.parse(JSON.stringify(inputArray));
+```
+
+1. Starting with the Original: You have an array or object, referred to as inputArray in this case. You want to make a new version of it that looks exactly the same but is completely independent. This means changes to the new version won't affect the original, and vice versa.
+2. JSON.stringify(inputArray): This part of the code takes your original array or object (inputArray) and converts it into a string format. JSON stands for JavaScript Object Notation, which is a way of representing data as a string. This string describes all the details of your array or object, like a blueprint, but it's not something you can directly modify or work with as if it were the original array or object.
+3. JSON.parse(...): Now, you have a string that represents your original array or object. The next step is to turn this string back into a JavaScript array or object. That's what JSON.parse() does. It takes the string created by JSON.stringify() and reconstructs a new array or object from it.
+4. Deep Copy Created: The result of JSON.parse(JSON.stringify(inputArray)) is a new array or object that is a deep copy of the original. "Deep copy" means that all levels of the array or object have been copied, including nested arrays and objects. It's not just the top level that's been duplicated; everything inside, no matter how many layers deep, has been copied as well.
+5. Why This Matters: When you modify the new array or object (deepCopiedArray), these changes will not affect the original inputArray at all, because the deep copy is completely independent. This is particularly useful when you need to work with or manipulate data but also need to preserve the original state of the data for other purposes.
+
 
 ## Further ressources
 
