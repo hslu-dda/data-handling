@@ -4,8 +4,21 @@ Hello fellow data enthusiast 🌈. This is a repository with some helpful Javasc
 
 **Table of Content**
 
+Basics: 
+
 - [Load Data](#load-data)
 - [Creating functions and passing arguments](#creating-functions-and-passing-arguments)
+- [Working with return statements](#working-with-return-statements)
+- [Arrow functions](#arrow-functions)
+- [Working with objects](#working-with-objects)
+
+Data Manipulation: 
+
+- [Convert percentages to numbers](#convert-percentages-to-numbers)
+- [Filter objects based on values](#filter-objects-based-on-values)
+- [Find the highest value](#find-the-highest-value)
+- [Find the lowest Value](#find-the-lowest-Value)
+- [Sort by key and value](#sort-by-key-and-value)
 
 ## Basics
 
@@ -197,11 +210,11 @@ function getHighestValue(inputArray){
 3. The result of the reduce function is stored in `highestValueObject`, which will be the object from the array with the highest value.
 4. Finally we will return `highestValueObject`.
 
-### Finding the Lowest Value
+### Find the lowest Value
 
 Look at the code to find the highest value, what would you need to change? 
 
-### Sort by key/value
+### Sort by key and value
 
 To sort an array we can use the `sort` function. The function will take two arguments: the array of objects to sort, and a string indicating the sort direction ("asc" for ascending or "desc" for descending). It will return a new array sorted accordingly.
 
