@@ -8,10 +8,10 @@ function setup() {
   noLoop();
 
   d3.csv("./data/selbstwirksamkeit.csv", d3.autoType).then((csv) => {
-    console.log(csv);
+    console.log("Loaded data: ", csv);
 
     data = percentageToNumbers(csv);
-    console.log("Data: ", data);
+    console.log("Data with numbers: ", data);
 
     migrationData = groupByValue(data, "Faktor", "Migrationshintergrund");
     console.log("Migration Data", migrationData);
@@ -24,16 +24,22 @@ function setup() {
   });
 }
 
-function percentageToNumbers(inputArray) {
-  const convertedArray = inputArray.map((obj) => {
-    // Remove the '%' from 'value' and convert to number
-    const valueAsNumber = parseFloat(obj.Value.replace("%", ""));
-    // Return a new object with the converted number
-    return { ...obj, Value: valueAsNumber };
+// convert Value: '95%' to Value: 95
+function percentageToNumbers(inputArray){
+  const convertedArray = inputArray.map(obj => {
+    // Remove the '%' from 'Value'
+    const justNumber = obj.Value.replace('%', '')
+    // convert to data type number
+    const valueAsNumber = parseFloat(justNumber);
+    // Reassign the new number-value
+    obj.Value = valueAsNumber;
+    // Return the object to the array
+    return obj;
   });
   return convertedArray;
 }
 
+// Create an array only with elements that contain groupKey: groupTrigger
 function groupByValue(inputArray, groupKey, groupTrigger) {
   const groupedArray = inputArray.filter((obj) => {
     // test if the obj has a value of 'groupTrigger' in 'groupKey'

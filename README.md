@@ -23,7 +23,7 @@ function setup() {
 
 ### Creating functions and passing arguments
 
-Functions are a great way to define code blocks that you need to call multiple times. By passing arguments you can even make them flexible to your needs. Lastly functions keep your code tiny and easy to read.
+Functions are a great way to define code blocks that you need to call multiple times. By passing arguments you can make them flexible to your needs. Lastly functions keep your code tidy and easy to read. Here is an example:
 
 ```js
 // Defining the function
@@ -44,11 +44,9 @@ greetPerson("Bob");
 
 3. **Calling the Function:** To use the function, you call it by writing its name followed by parentheses. Inside the parentheses, you provide the value you want to pass to the function as an argument. In the first call, we pass `"Alice"` as the argument, so `name` takes the value `"Alice"` inside the function, and `"Hello, Alice!"` is printed to the console. In the second call, we pass `"Bob"`, so `"Hello, Bob!"` is printed.
 
-This example demonstrates the basic structure of a function in JavaScript, how to pass an argument to a function, and how that argument can be used within the function to perform an action (in this case, printing a greeting message). Notice that there's no `return` statement in this function because we are not returning any value from it; instead, we're just performing an action.
-
 ### Working with return statements
 
-A return is a powerfull tool to manipulate data while keeping your code nice and tidy! Here's a simple example of a JavaScript function that takes a value, performs an operation on it, and then returns a new value. This function will take a number as input, double it, and return the result:
+A return is a powerfull tool to manipulate data. Here's an example of a JavaScript function that takes a value, performs an operation on it, and then returns a new value.
 
 ```js
 function doubleValue(inputNumber) {
@@ -61,16 +59,60 @@ const newValue = doubleValue(originalValue);
 console.log(newValue); // Outputs: 10
 ```
 
+### Arrow functions
+
+Sometimes you see functions written with the _arrow syntax_ that got introduced into Javascript in 2015. It aimes at making the code more concise but can lead to confusion if you never saw it. Basically it does the same than a regular function, it is just written differently. 
+
+```js
+// regular function
+function doubleValue(inputNumber) {
+  return inputNumber * 2;
+}
+
+// the same function written with the arrow syntax
+const doubleValue = (inputNumber) => {
+  return inputNumber * 2;
+}
+
+// written on just one line
+const doubleValue = inputNumber => inputNumber * 2;
+```
+
+### Working with objects
+
+Objects always have a key/value pair. You need to key to access the value.
+
+```js
+let arrayOfObjects = [
+  {'Faktor': 'Migrationshintergrund', 'Value': '33.2%'}, 
+  {'Faktor': 'Migrationshintergrund', 'Value': '32.9%'}, 
+  {'Faktor': 'Migrationshintergrund', 'Value': '31.7%'}, 
+]
+
+// access the first object
+let firstObj = arrayOfObjects[0];
+
+// access the value from the first object, outputs 33.2%
+firstObj.Value 
+
+// access the value from the first object, outputs 33.2%
+firstObj[Value]
+
+// reassign the value from the first object
+// now the ouptut is 33.2 as a number, not a string
+firstObj[Value] = 33.2
+
+// now the output is something totally different
+firstObj[Value] = 'banana'
+```
+
 ## Data Manipulation
 
-Let's get to it!
+Let's get to it! For this purpose, we will primarily work with so-called **Array Functions**, helpful functions and methods that can be exclusively used on arrays. 
 
 ###  Convert percentages to numbers
 
-  1. Use map to iterate over each object in your array.
-  2. For each object, extract the percentage value from the "Value" key.
-  3. Remove the '%' character and convert the remaining string to a number.
-  4. Return a new object with the transformed value or just the value itself, depending on your needs.
+This is a relatively unusual task, but the Obsan data entails percentages that are strings not numbers (e.g. `'95%'`). 
 
 ```js
 // call the function and directly assign the new array with: 
@@ -78,24 +120,27 @@ Let's get to it!
 
 function percentageToNumbers(inputArray){
   const convertedArray = inputArray.map(obj => {
-    // Remove the '%' from 'Value' and convert to number
-    const valueAsNumber = parseFloat(obj.Value.replace('%', ''));
-    // Return a new object with the converted number
-    return { ...obj, Value: valueAsNumber };
+    // Remove the '%' from 'Value'
+    const justNumber = obj[Value]replace('%', '')
+    // convert to data type number
+    const valueAsNumber = parseFloat(justNumber);
+    // Reassign the new number-value
+    obj[Value] = valueAsNumber;
+    // Return the object to the array
+    return obj;
   });
   return convertedArray;
 }
 ```
 
+1. Use map to iterate over each object in your array.
+2. For each object, extract the percentage value from the "Value" key.
+3. Remove the '%' character and convert the remaining string to a number.
+4. Return a new object with the transformed value or just the value itself, depending on your needs.
+
 ### Filter objects based on values
 
 To group all elements from an array based on a key/value pair and save them in a new separate array, you can use the filter function in JavaScript.
-
-1. We use the filter method on the input array. This method takes a callback function that specifies the filtering condition.
-2. The callback function checks each object to see if its `groupKey` (e.g. `'Faktor'`) has a value equal to `groupTrigger` (e.g. `'Migrationshintergrund'`).
-3. We specify `groupKey` and `groupTrigger` when we call the function.
-4. filter returns a new array `groupedArray` that includes only those objects from the input array where the 'Faktor' is equal to 'Migrationshintergrund'.
-5. Finally, we return the new filtered array. 
 
 ```js
 // call the function and directly assign the new array with: 
@@ -114,12 +159,13 @@ function groupByValue(inputArray, groupKey, groupTrigger) {
 }
 ```
 
-### Find the highest value
+1. We use the filter method on the input array. This method takes a callback function that specifies the filtering condition.
+2. The callback function checks each object to see if its `groupKey` (e.g. `'Faktor'`) has a value equal to `groupTrigger` (e.g. `'Migrationshintergrund'`).
+3. We specify `groupKey` and `groupTrigger` when we call the function.
+4. filter returns a new array `groupedArray` that includes only those objects from the input array where the 'Faktor' is equal to 'Migrationshintergrund'.
+5. Finally, we return the new filtered array. 
 
-1. We use the reduce function to iterate through the array. The reduce function takes a callback function as its first argument. This callback function takes two parameters: prev and current. prev is the accumulator that holds the object with the highest value found so far, and current is the current object being processed.
-2. Inside the callback, we compare the value property of prev and current. We use an `if` statement to return the object with the higher value.
-3. The result of the reduce function is stored in `highestValueObject`, which will be the object from the array with the highest value.
-4. Finally we will return `highestValueObject`.
+### Find the highest value
 
 ```js
 // call the function and directly assign the highest value with: 
@@ -139,13 +185,18 @@ function getHighestValue(inputArray){
 }
 ```
 
+1. We use the reduce function to iterate through the array. The reduce function takes a callback function as its first argument. This callback function takes two parameters: prev and current. prev is the accumulator that _holds the object with the highest value found so far_, and current is the current object being processed.
+2. Inside the callback, we compare the value property of prev and current. We use an `if` statement to return the object with the higher value.
+3. The result of the reduce function is stored in `highestValueObject`, which will be the object from the array with the highest value.
+4. Finally we will return `highestValueObject`.
+
 ### Finding the Lowest Value
 
 Look at the code to find the highest value, what would you need to change? 
 
 ### Sort by key/value
 
-To sort an array wen can use the `sort` function. The function will take two arguments: the array of objects to sort, and a string indicating the sort direction ("asc" for ascending or "desc" for descending). It will return a new array sorted accordingly.
+To sort an array we can use the `sort` function. The function will take two arguments: the array of objects to sort, and a string indicating the sort direction ("asc" for ascending or "desc" for descending). It will return a new array sorted accordingly.
 
 ```js
 // call the function and directly assign the new array with: 
