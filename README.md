@@ -1,5 +1,12 @@
 # Data Handling
 
+Hello fellow data enthusiast 🌈. This is a repository with some helpful Javascript code to handle data. For the documentation keep reading, for the code take a look at [p5d5-data-handling](./p5d3-data-handling/) and at [import-export-csv](./import-export-csv/).
+
+**Table of Content**
+
+- [Load Data](#Load Data)
+- [Creating functions and passing arguments](#Creating functions and passing arguments)
+
 ## Basics
 
 ### Load Data
