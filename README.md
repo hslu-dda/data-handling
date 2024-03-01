@@ -4,8 +4,8 @@ Hello fellow data enthusiast 🌈. This is a repository with some helpful Javasc
 
 **Table of Content**
 
-- [Load Data](#load)
-- [Creating functions and passing arguments](#creating)
+- [Load Data](#load-data)
+- [Creating functions and passing arguments](#creating-functions-and-passing-arguments)
 
 ## Basics
 
