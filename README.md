@@ -116,14 +116,14 @@ let firstObj = arrayOfObjects[0];
 firstObj.Value 
 
 // access the value from the first object, outputs 33.2%
-firstObj[Value]
+firstObj["Value"]
 
 // reassign the value from the first object
 // now the ouptut is 33.2 as a number, not a string
-firstObj[Value] = 33.2
+firstObj["Value"] = 33.2
 
 // now the output is something totally different
-firstObj[Value] = 'banana'
+firstObj["Value"] = 'banana'
 ```
 
 ## Data Manipulation
