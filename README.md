@@ -1,6 +1,6 @@
 # Data Handling
 
-Hello fellow data enthusiast 🌈. This is a repository with some helpful Javascript code to handle data. For the documentation keep reading, for the code take a look at [p5d5-data-handling](./p5d3-data-handling/), at [d3-helpers](./d3-helpers/) and at [import-export-csv](./import-export-csv/).
+Hello fellow data enthusiast 🌈. This is a repository with some helpful Javascript code to handle data. For the documentation keep reading, for the code take a look at [custom-data-manipulation](./custom-data-manipulation/), at [d3-helpers](./d3-helpers/) and at [import-export-csv](./import-export-csv/).
 
 **Table of Content**
 
@@ -367,7 +367,6 @@ const deepCopiedArray = JSON.parse(JSON.stringify(inputArray));
 3. JSON.parse(...): Now, you have a string that represents your original array or object. The next step is to turn this string back into a JavaScript array or object. That's what JSON.parse() does. It takes the string created by JSON.stringify() and reconstructs a new array or object from it.
 4. Deep Copy Created: The result of JSON.parse(JSON.stringify(inputArray)) is a new array or object that is a deep copy of the original. "Deep copy" means that all levels of the array or object have been copied, including nested arrays and objects. It's not just the top level that's been duplicated; everything inside, no matter how many layers deep, has been copied as well.
 5. Why This Matters: When you modify the new array or object (deepCopiedArray), these changes will not affect the original inputArray at all, because the deep copy is completely independent. This is particularly useful when you need to work with or manipulate data but also need to preserve the original state of the data for other purposes.
-
 
 ## Further ressources
 
