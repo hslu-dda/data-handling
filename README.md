@@ -6,13 +6,15 @@ Hello fellow data enthusiast 🌈. This is a repository with some helpful Javasc
 
 Basics: 
 
-- [Load Data](#load-data)
+- [Creating CSVs](creating-csvs)
+- [Loading Data](#loading-data)
+- [Working with Objects](#working-with-objects)
+- [Data Iteration and Loops](#data-iteration-and-loops)
 - [Creating functions and passing arguments](#creating-functions-and-passing-arguments)
 - [Working with return statements](#working-with-return-statements)
 - [Arrow functions](#arrow-functions)
-- [Working with objects](#working-with-objects)
 
-Data Manipulation: 
+Custom Data Manipulation: 
 
 - [Convert percentages to numbers](#convert-percentages-to-numbers)
 - [Filter objects based on values](#filter-objects-based-on-values)
@@ -26,28 +28,85 @@ D3 Helper Functions
 
 ## Basics
 
-### Load Data
+### Creating CSVs
 
-To load the CSV file we can use the `d3.csv()` function. To avoid problems with asynchronous loading we can use `noLoop()` and `redraw()`.
+When you export a CSV file from Excel you may have noticed that it uses a semicolon (`;`) instead of a comma (`,`) as a delimiter. This is because we are based in Europe and Excel assumes that you have commas withing numbers. Therefore it chooses the semicolon to avoid problems. On Mac you can set the language of Excel to English to export CSVs with commas by default. For this go to _Systemeinstellungen > Sprache & Region > Apps_. Then select Excel and set English as default language. You may need to restart Excel. 
+
+### Loading Data
+
+To load the CSV file we can use the `d3.csv()` function. For this to work you need to include the [D3 Library](https://d3js.org/getting-started#d3-in-vanilla-html). To avoid problems with asynchronous loading we can use `noLoop()` and `redraw()`.
 
 ```js
 let data;
 
 function setup() {
   createCanvas(400, 400);
-  noLoop();
+  noLoop(); // stop the draw
 
   d3.csv('./data/selbstwirksamkeit.csv', d3.autoType).then(csv => {
     console.log(csv)
     data = csv;
-    redraw();
+    redraw(); // when data is loaded, redraw
   });
 }
 ```
 
-### Creating functions and passing arguments
+### Working with Objects
 
-Functions are a great way to define code blocks that you need to call multiple times. By passing arguments you can make them flexible to your needs. Lastly functions keep your code tidy and easy to read. Here is an example:
+Objects always have a key/value pair. You need the key to access the value. For example: The key `Faktor` allows you to access the value `Migrationshintergrund`.
+
+```js
+let arrayOfObjects = [
+  {'Faktor': 'Migrationshintergrund', 'Value': '33.2%'}, 
+  {'Faktor': 'Migrationshintergrund', 'Value': '32.9%'}, 
+  {'Faktor': 'Migrationshintergrund', 'Value': '31.7%'}, 
+]
+
+// access the first object
+let firstObj = arrayOfObjects[0];
+
+// access "Faktor" from the first object, outputs "Migrationshintergrund"
+firstObj["Faktor"]
+
+// access "Value" from the first object, outputs 33.2%
+firstObj["Value"]
+
+// now the ouptut is 33.2 as a number, not a string
+firstObj["Value"] = 33.2
+
+// now the output is something totally different
+firstObj["Value"] = 'banana'
+```
+
+### Data Iteration and Loops
+
+Usually we have data in array format. To access each item in the array we need to loop over it. There a different ways to iterate over an array. Following are two common ones: 
+
+```js
+for (let i = 0; i < arrayOfObjects.length; i++) {
+  // log each object
+  console.log(arrayOfObjects[i]);
+  // log the Faktor of each object
+  console.log(arrayOfObjects[i]["Faktor"])
+}
+```
+
+An alternate way is using `forEach`. This only works for arrays.
+
+```js
+arrayOfObjects.forEach((obj) => {
+    // log each object
+  console.log(obj);
+  // log the Faktor of each object
+  console.log(obj["Faktor"])
+})
+```
+
+Both ways lead to the same result and it is your personal preference which way you use. However, it is important to know `forEach` because you will likely come across it in tutorials on the web.
+
+### Creating Functions and passing Arguments
+
+Functions are a great way to define code blocks that you need to call multiple times. By passing arguments you can make them flexible to your needs. Functions keep your code tidy and easy to read. Here is an example:
 
 ```js
 // Defining the function
@@ -66,29 +125,29 @@ greetPerson("Bob");
    
 2. **The Function Body:** Inside the curly braces `{}` is the body of the function, where we write what the function should do. In this case, it uses `console.log` to print a greeting message to the console. The `+` operator is used to concatenate (join together) the strings "Hello, ", the value of `name`, and "!", forming a personalized greeting.
 
-3. **Calling the Function:** To use the function, you call it by writing its name followed by parentheses. Inside the parentheses, you provide the value you want to pass to the function as an argument. In the first call, we pass `"Alice"` as the argument, so `name` takes the value `"Alice"` inside the function, and `"Hello, Alice!"` is printed to the console. In the second call, we pass `"Bob"`, so `"Hello, Bob!"` is printed.
+3. **Calling the Function:** To use the function, you call it by writing its name followed by parentheses. Inside the parentheses, you provide the value you want to pass to the function as an argument. In the first call, we pass `"Alice"` as the argument, so `name` takes the value `"Alice"` inside the function, and `"Hello, Alice!"` is printed to the console. In the second call, we pass `"Bob"`, so `"Hello, Bob!"` is printed. The order of the function definition and calling the function doesn't play a role. Once defined, functions can be accessed from anywhere in the code.
 
 ### Working with return statements
 
-A return is a powerfull tool to manipulate data. Here's an example of a JavaScript function that takes a value, performs an operation on it, and then returns a new value.
+A return is a powerfull tool to manipulate data. Here's an example of a JavaScript function that takes a value, performs an operation on it, and then returns a new value. To access the returned result you create a new variabel (e.g. `let newValue`) and the function assigns its result to this variable.
 
 ```js
 function doubleValue(inputNumber) {
   return inputNumber * 2;
 }
 
-const originalValue = 5;
-const newValue = doubleValue(originalValue);
+let originalValue = 5;
+let newValue = doubleValue(originalValue); // the function returns the result and saves it into "newValue"
 
-console.log(newValue); // Outputs: 10
+console.log(newValue); // Outputs 10, the result of the function
 ```
 
 ### Arrow functions
 
-Sometimes you see functions written with the _arrow syntax_ that got introduced into Javascript in 2015. It aimes at making the code more concise but can lead to confusion if you never saw it. Basically it does the same than a regular function, it is just written differently. 
+Sometimes you see functions written with the _arrow syntax_ that got introduced into Javascript in 2015. It aimes at making the code more concise but can lead to confusion if you never saw it. Basically it does the same as a regular function, it is just written differently. 
 
 ```js
-// regular function
+// old but still valid way to write a function
 function doubleValue(inputNumber) {
   return inputNumber * 2;
 }
@@ -98,41 +157,13 @@ const doubleValue = (inputNumber) => {
   return inputNumber * 2;
 }
 
-// written on just one line
-const doubleValue = inputNumber => inputNumber * 2;
+// the same function written on just one line
+const doubleValue = (inputNumber) => inputNumber * 2;
 ```
 
-### Working with objects
+## Custom Data Manipulation
 
-Objects always have a key/value pair. You need to key to access the value.
-
-```js
-let arrayOfObjects = [
-  {'Faktor': 'Migrationshintergrund', 'Value': '33.2%'}, 
-  {'Faktor': 'Migrationshintergrund', 'Value': '32.9%'}, 
-  {'Faktor': 'Migrationshintergrund', 'Value': '31.7%'}, 
-]
-
-// access the first object
-let firstObj = arrayOfObjects[0];
-
-// access the value from the first object, outputs 33.2%
-firstObj.Value 
-
-// access the value from the first object, outputs 33.2%
-// this is in many cases safer, it would also work for keys with spaces, e.g. ["Value of Height"] 
-firstObj["Value"]
-
-// now the ouptut is 33.2 as a number, not a string
-firstObj["Value"] = 33.2
-
-// now the output is something totally different
-firstObj["Value"] = 'banana'
-```
-
-## Data Manipulation
-
-Let's get to it! For this purpose, we will primarily work with so-called **Array Functions**, helpful functions and methods that can be exclusively used on arrays. 
+Libraries like D3 provide many helpful functions to manipulate your data. But sometimes you need more control and create your own custom function. Here are a few examples.
 
 ###  Convert percentages to numbers
 
