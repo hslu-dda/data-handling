@@ -116,9 +116,9 @@ let firstObj = arrayOfObjects[0];
 firstObj.Value 
 
 // access the value from the first object, outputs 33.2%
+// this is in many cases safer, it would also work for keys with spaces, e.g. ["Value of Height"] 
 firstObj["Value"]
 
-// reassign the value from the first object
 // now the ouptut is 33.2 as a number, not a string
 firstObj["Value"] = 33.2
 
@@ -258,6 +258,30 @@ function sortArray(inputArray, sortOrder, sortByKey) {
 2. We then use the `sort` method of the array, which modifies the array in place. The `sort` method takes a comparison function that defines the sort order. Based on the `sortOrder` argument ("asc" or "desc"), we adjust the comparison logic within this function.
 3. In the comparison function, we use `if` statements to compare the `value` keys of the objects according to the specified sort order.
 4. Finally, we return the sorted copy of the array.
+
+## D3 Helper Functions
+
+Many of the above "hand-made" data manipulation can be achieved with built in D3 functions, here are some examples: 
+
+```js
+
+// sortes the array based on the values in "Value"
+let sortedData = d3.sort(data, (d) => d["Value"])
+
+// get the minimum of "Value"
+let minimum = d3.min(data, (d) =>  d["Value"]);
+
+// get the maximum of "Value"
+let maximum = d3.max(data, (d) => d["Value"]);
+
+// groups the array based on values in "Faktor"
+// this returns a map object
+let groupedData = d3.group(data, (d) => d["Faktor"]);
+
+// to access the data in a map object you need to use "get"
+let groupedMigration = groupedData.get("Migrationshintergrund")
+
+```
 
 ## Questions & Problems
 
