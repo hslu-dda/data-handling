@@ -10,9 +10,12 @@ Basics:
 - [Loading Data](#loading-data)
 - [Working with Objects](#working-with-objects)
 - [Data Iteration and Loops](#data-iteration-and-loops)
+
+Functions:
+
 - [Creating functions and passing arguments](#creating-functions-and-passing-arguments)
-- [Working with return statements](#working-with-return-statements)
-- [Arrow functions](#arrow-functions)
+- [Using Return](#using-return)
+- [Arrow Syntax](#arrow-syntax)
 
 Custom Data Manipulation: 
 
@@ -30,7 +33,7 @@ D3 Helper Functions
 
 ### Creating CSVs
 
-When you export a CSV file from Excel you may have noticed that it uses a semicolon (`;`) instead of a comma (`,`) as a delimiter. This is because we are based in Europe and Excel assumes that you have commas withing numbers. Therefore it chooses the semicolon to avoid problems. On Mac you can set the language of Excel to English to export CSVs with commas by default. For this go to _Systemeinstellungen > Sprache & Region > Apps_. Then select Excel and set English as default language. You may need to restart Excel. 
+When you export a CSV file from Excel you may have noticed that it uses a semicolon (`;`) instead of a comma (`,`) as a delimiter. This is because we are based in Europe and Excel assumes that you have commas within numbers. Therefore it chooses the semicolon to avoid problems. To export CSVs with commas by default you can set the language of Excel to English on Mac. For this go to _Systemeinstellungen > Sprache & Region > Apps_. Then select Excel and set English as default language. You may need to restart Excel. 
 
 ### Loading Data
 
@@ -78,6 +81,8 @@ firstObj["Value"] = 33.2
 firstObj["Value"] = 'banana'
 ```
 
+Sometimes you see `firstObj.Faktor` instead of `firstObj["Faktor"]`. Technically this leads to the same result. Using `firstObj["Faktor"]` has proven to be more versatile.
+
 ### Data Iteration and Loops
 
 Usually we have data in array format. To access each item in the array we need to loop over it. There a different ways to iterate over an array. Following are two common ones: 
@@ -102,11 +107,13 @@ arrayOfObjects.forEach((obj) => {
 })
 ```
 
-Both ways lead to the same result and it is your personal preference which way you use. However, it is important to know `forEach` because you will likely come across it in tutorials on the web.
+Both ways lead to the same result and it is your personal preference which way you use. It is important to know `forEach` because you will likely come across it in tutorials on the web.
+
+## Functions
+
+Functions are a great way to define code blocks that you need to call multiple times. By passing arguments you can make them flexible to your needs. Functions keep your code tidy and easy to read.
 
 ### Creating Functions and passing Arguments
-
-Functions are a great way to define code blocks that you need to call multiple times. By passing arguments you can make them flexible to your needs. Functions keep your code tidy and easy to read. Here is an example:
 
 ```js
 // Defining the function
@@ -127,9 +134,9 @@ greetPerson("Bob");
 
 3. **Calling the Function:** To use the function, you call it by writing its name followed by parentheses. Inside the parentheses, you provide the value you want to pass to the function as an argument. In the first call, we pass `"Alice"` as the argument, so `name` takes the value `"Alice"` inside the function, and `"Hello, Alice!"` is printed to the console. In the second call, we pass `"Bob"`, so `"Hello, Bob!"` is printed. The order of the function definition and calling the function doesn't play a role. Once defined, functions can be accessed from anywhere in the code.
 
-### Working with return statements
+### Using Return
 
-A return is a powerfull tool to manipulate data. Here's an example of a JavaScript function that takes a value, performs an operation on it, and then returns a new value. To access the returned result you create a new variabel (e.g. `let newValue`) and the function assigns its result to this variable.
+Often, after the function has been executed, you want to "get" the result (e.g. a manipulated data array) to continue working. For this purpose, functions can not only receive arguments, they can also "return" (send back). Here's an example of a JavaScript function that takes a value, performs an operation on it, and then returns a new value. To access the returned result you create a new variabel (e.g. `let newValue`) and the function assigns the result to this variable.
 
 ```js
 function doubleValue(inputNumber) {
@@ -142,13 +149,13 @@ let newValue = doubleValue(originalValue); // the function returns the result an
 console.log(newValue); // Outputs 10, the result of the function
 ```
 
-### Arrow functions
+### Arrow Syntax
 
 Sometimes you see functions written with the _arrow syntax_ that got introduced into Javascript in 2015. It aimes at making the code more concise but can lead to confusion if you never saw it. Basically it does the same as a regular function, it is just written differently. 
 
 ```js
 // old but still valid way to write a function
-function doubleValue(inputNumber) {
+function doubleValue(inputNumber) {§1
   return inputNumber * 2;
 }
 
@@ -193,9 +200,22 @@ function percentageToNumbers(inputArray){
 3. Remove the '%' character and convert the remaining string to a number.
 4. Return a new object with the transformed value or just the value itself, depending on your needs.
 
+The same function can also be written using a `for loop`:
+
+```js
+function percentageToNumbers(inputArray) {
+  for (let i = 0; i < inputArray.length; i++) {
+    let withoutSign = inputArray[i]["Value"].replace("%", "");
+    let asNumber = parseFloat(withoutSign);
+    inputArray[i]["Value"] = asNumber;
+  }
+  return inputArray;
+}
+```
+
 ### Filter objects based on values
 
-To group all elements from an array based on a key/value pair and save them in a new separate array, you can use the filter function in JavaScript.
+To filter all elements from an array based on a key/value pair and save them in a new separate array, you can use the filter function in JavaScript.
 
 ```js
 // call the function and directly assign the new array with: 
@@ -219,6 +239,22 @@ function groupByValue(inputArray, groupKey, groupTrigger) {
 3. We specify `groupKey` and `groupTrigger` when we call the function.
 4. filter returns a new array `groupedArray` that includes only those objects from the input array where the 'Faktor' is equal to 'Migrationshintergrund'.
 5. Finally, we return the new filtered array. 
+
+You can also use `for loop` and `if` to achieve the same result:
+
+```js
+function filterObjects(inputArray, groupKey, groupTrigger) {
+  let newArray = [];
+  for (let i = 0; i < inputArray.length; i++) {
+    if (inputArray[i][groupKey] == groupTrigger) {
+      // safe into newArray
+      newArray.push(inputArray[i])
+    }
+  }
+  // send all found objects back
+  return newArray;
+}
+```
 
 ### Find the highest value
 
@@ -299,7 +335,6 @@ function sortArray(inputArray, sortOrder, sortByKey) {
 Many of the above "hand-made" data manipulation can be achieved with built in D3 functions, here are some examples: 
 
 ```js
-
 // sortes the array based on the values in "Value"
 let sortedData = d3.sort(data, (d) => d["Value"])
 
@@ -315,7 +350,6 @@ let groupedData = d3.group(data, (d) => d["Faktor"]);
 
 // to access the data in a map object you need to use "get"
 let groupedMigration = groupedData.get("Migrationshintergrund")
-
 ```
 
 ## Questions & Problems
