@@ -20,6 +20,10 @@ Data Manipulation:
 - [Find the lowest Value](#find-the-lowest-Value)
 - [Sort by key and value](#sort-by-key-and-value)
 
+D3 Helper Functions
+
+- [sort, min, max, & group functions](#d3-helper-functions)
+
 ## Basics
 
 ### Load Data
